@@ -1,0 +1,15 @@
+.form-buttons {
+  display: flex;
+  justify-content: end;
+  button {
+    margin-right: 10px;
+  }
+}
+
+nz-form-item {
+  margin: 10px 0;
+
+  nz-form-control {
+    min-width: 100%;
+  }
+}

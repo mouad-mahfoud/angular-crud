@@ -1,0 +1,36 @@
+<div class="content-head">
+    <h3 nz-typography>Gestion des entreprise</h3>
+    <button nz-button nzType="primary" (click)="addCompany()">Ajouter</button>
+</div>
+
+<nz-table nzShowSizeChanger [nzData]="listOfCompanies" [nzFrontPagination]="false" [nzLoading]="loading"
+    [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" (nzQueryParams)="onQueryParamsChange($event)">
+    <thead>
+        <tr>
+            <th nzColumnKey="name">Entreprise</th>
+            <th nzColumnKey="address">Adresse</th>
+            <th nzColumnKey="manager.email">Email</th>
+            <th>...</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of listOfCompanies">
+            <td>{{ data.name }}</td>
+            <td>{{ data.address }}</td>
+            <td>{{ data.manager.email }}</td>
+            <td>
+                <a title="Modifier">
+                    <i nz-icon nzType="edit" nzTheme="twotone"></i>
+                </a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a title="Afficher">
+                    <i nz-icon nzType="eye" nzTheme="twotone"></i>
+                </a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a title="Supprimer">
+                    <i nz-icon nzType="delete" nzTheme="twotone"></i>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

@@ -12,26 +12,26 @@ export class ApiService {
   ) {}
 
   private formatErrors(error: any) {
-    return throwError(error.error);
+    return throwError(() => error);
   }
 
-  get(path: string, params: HttpParams = new HttpParams()): Observable<any> {
-    return this.http.get(`${environment.api_url}${path}`, {params})
+  get<T>(path: string, params: HttpParams = new HttpParams()): Observable<T> {
+    return this.http.get<T>(`${environment.api_url}${path}`, {params})
       .pipe(catchError(this.formatErrors));
   }
 
   put(path: string, body: Object = {}): Observable<any> {
     return this.http.put(
       `${environment.api_url}${path}`,
-      JSON.stringify(body)
-    ).pipe(catchError(this.formatErrors));
+      body
+    );//.pipe(catchError(this.formatErrors));
   }
 
-  post(path: string, body: Object = {}): Observable<any> {
+  post<T>(path: string, body: Object = {}): Observable<T | any> {
     return this.http.post(
       `${environment.api_url}${path}`,
-      JSON.stringify(body)
-    ).pipe(catchError(this.formatErrors));
+      body
+    );
   }
 
   delete(path: string): Observable<any> {

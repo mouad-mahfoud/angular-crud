@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { UnauthorizedComponent } from './shared/components/unauthorized/unauthorized.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -5,11 +6,6 @@ import { MainLayoutComponent } from './shared/layout/main-layout/main-layout.com
 import { FooterOnlyLayoutComponent } from './shared/layout/footer-only-layout/footer-only-layout.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    loadChildren: () =>
-      import('./features/home/home.module').then((m) => m.HomeModule)
-  },
   {
     path: '',
     component: MainLayoutComponent,
@@ -20,6 +16,23 @@ const routes: Routes = [
           import('./features/dashboard/dashboard.module').then(
             (m) => m.DashboardModule
           )
+      },
+      {
+        path: 'company',
+        loadChildren: () =>
+          import('./features/company/company.module').then(
+            (m) => m.CompanyModule
+          )
+      },
+      {
+        path: 'agents',
+        loadChildren: () =>
+          import('./features/agents/agents.module').then((m) => m.AgentsModule)
+      },
+      {
+        path: 'agencies',
+        loadChildren: () =>
+          import('./features/agency/agency.module').then((m) => m.AgencyModule)
       }
     ]
   },
@@ -35,12 +48,12 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'admin',
+    path: '',
     loadChildren: () =>
-      import('./features/admin/admin.module').then((m) => m.AdminModule)
+      import('./features/home/home.module').then((m) => m.HomeModule)
   },
   { path: '403', component: UnauthorizedComponent },
-  { path: '**', redirectTo: '' }
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

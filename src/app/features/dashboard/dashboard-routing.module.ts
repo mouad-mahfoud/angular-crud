@@ -1,3 +1,4 @@
+import { Role } from './../../core/enums/role.enum';
 import { HasRoleGuard } from './../../core/guards/has-role.guard';
 import { AgencyDashboardComponent } from './pages/agency-dashboard/agency-dashboard.component';
 import { CompanyDashboardComponent } from './pages/company-dashboard/company-dashboard.component';
@@ -18,7 +19,10 @@ const routes: Routes = [
   {
     path: 'company',
     component: CompanyDashboardComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, HasRoleGuard],
+    data: {
+      role: Role.ROLE_COMPANY_ADMIN
+    }
   },
   {
     path: 'agency',

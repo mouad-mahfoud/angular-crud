@@ -23,12 +23,10 @@ export class HasRoleGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log(this.jwtService.getRolesFromToken());
-
     if (
       this.jwtService
         .getRolesFromToken()
-        .some((el) => el.authority === route.data['role'])
+        .some((el) => el === route.data['role'])
     ) {
       return true;
     }

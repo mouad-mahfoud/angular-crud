@@ -2,7 +2,7 @@ import { User } from './../models/user.model';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { map, distinctUntilChanged, mergeMap, tap } from 'rxjs/operators';
+import { distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { UserService } from './user.service';
@@ -19,8 +19,7 @@ export class AuthService {
   constructor(
     private router: Router,
     private apiService: ApiService,
-    private jwtService: JwtService,
-    private userService: UserService
+    private jwtService: JwtService
   ) {}
 
   logout() {
@@ -37,8 +36,17 @@ export class AuthService {
       tap(({ token }) => {
         this.jwtService.saveToken(token);
         this._isAuthenticated$.next(true);
+      }),
+      switchMap((val) => {
+        console.log(val);
+        const userPublicId = this.jwtService.getUserIdFromToken();
+        return this.apiService.get<User>(`users/${userPublicId}`);
       })
     );
+  }
+
+  hasRole(role: string): boolean {
+    return this.jwtService.getRolesFromToken().some((el) => el === role);
   }
 
   checkAuth() {
